@@ -1,6 +1,9 @@
 # Ide files
 .idea
 
+# Build files
+dist
+
 # Logs
 logs
 *.log
