@@ -1,6 +1,8 @@
 # Ide files
 .idea
 
+dist
+
 # Logs
 logs
 *.log
