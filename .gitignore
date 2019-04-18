@@ -1,6 +1,7 @@
 # Ide files
 .idea
 
+# Build files
 dist
 
 # Logs
