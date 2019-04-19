@@ -1,5 +1,6 @@
 const express = require('express');
 const mongodb = require('mongodb');
+const db = require('../../config/db');
 
 const router = express.Router();
 
@@ -17,6 +18,7 @@ router.route('/posts/')
         });
         res.status(201).send();
     });
+
 router.route('/posts/:id')
     //.get()
     //.put()
@@ -26,15 +28,9 @@ router.route('/posts/:id')
         res.status(200).send();
     });
 
-//add post
-
-//delete post
-
 async function loadPostCollection() {
     const client = await mongodb.MongoClient.connect(
-        'mongodb+srv://niki:OREdqsFrle0FKgRP@cluster0-kfimm.mongodb.net/test?retryWrites=true', {
-            useNewUrlParser: true
-        });
+        db.url, { useNewUrlParser: true });
 
     return client.db('vue_express').collection('posts')
 }
