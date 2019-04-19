@@ -4,6 +4,9 @@
 # Build files
 dist
 
+# Configs
+server/config/db.js
+
 # Logs
 logs
 *.log
