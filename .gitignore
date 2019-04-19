@@ -1,7 +1,11 @@
 # Ide files
 .idea
 
+# Compiles files
 dist
+
+# Configs
+server/config/db.js
 
 # Logs
 logs
