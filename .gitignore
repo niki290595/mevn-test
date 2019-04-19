@@ -1,7 +1,7 @@
 # Ide files
 .idea
 
-# Compiles files
+# Build files
 dist
 
 # Configs
