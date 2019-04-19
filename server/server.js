@@ -10,9 +10,7 @@ app.use(cors());
 
 //app.use(express.static(path.join(__dirname, 'public')));
 
-const posts = require("./routes/api/posts");
-
-app.use('/api/posts', posts);
+app.use('/api', require("./routes/api/posts"));
 
 const port = process.env.PORT || 5000;
 
