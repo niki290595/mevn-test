@@ -1,24 +1,29 @@
 const express = require('express');
-const Joi = require('joi');
 
+const Joi = require('joi');
 const schema = Joi.object().keys({
-    username: Joi.string().regex(/(^[a-zA-Z0-9_]+$)/).min(3).max(30).required(),
-    password: Joi.string().min(6).required()
+  username: Joi.string().regex(/(^[a-zA-Z0-9_]+$)/).min(3).max(30).required(),
+  password: Joi.string().min(6).required()
 });
+
+const db = require('../../config/db');
+const users = db.get('users');
+
+users.index('username');
 
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-    res.json({
-       message: "cool"
-    });
+  res.json({
+    message: "cool"
+  });
 });
 
 router.post('/signup', (req, res) => {
 
-    const result = Joi.validate(req.body, schema);
+  const result = Joi.validate(req.body, schema);
 
-    res.json(result);
+  res.json(result);
 });
 
 module.exports = router;

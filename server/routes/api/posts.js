@@ -1,6 +1,6 @@
 const express = require('express');
 const mongodb = require('mongodb');
-const db = require('../../config/db');
+// const db = require('../../config/db');
 
 const router = express.Router();
 
@@ -29,10 +29,10 @@ router.route('/:id')
     });
 
 async function loadPostCollection() {
-    const client = await mongodb.MongoClient.connect(
-        db.url, { useNewUrlParser: true });
-
-    return client.db('vue_express').collection('posts')
+    // const client = await mongodb.MongoClient.connect(
+    //     db.url, { useNewUrlParser: true });
+    //
+    // return client.db('vue_express').collection('posts')
 }
 
 module.exports = router;
