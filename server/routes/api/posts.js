@@ -5,7 +5,7 @@ const db = require('../../config/db');
 const router = express.Router();
 
 //get post
-router.route('/posts/')
+router.route('/')
     .get(async (req, res) => {
         const posts = await loadPostCollection();
         res.send(await posts.find({}).toArray());
@@ -19,7 +19,7 @@ router.route('/posts/')
         res.status(201).send();
     });
 
-router.route('/posts/:id')
+router.route('/:id')
     //.get()
     //.put()
     .delete(async (req, res) => {

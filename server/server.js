@@ -13,7 +13,8 @@ app.use(cors());
 
 //app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/api', require("./routes/api/posts"));
+app.use('/auth', require("./routes/auth/index"));
+app.use('/api/posts', require("./routes/api/posts"));
 
 const port = process.env.PORT || 5000;
 
