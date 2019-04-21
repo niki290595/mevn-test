@@ -1,8 +1,11 @@
 const express = require('express');
+const volleyball = require('volleyball');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const app = express();
+
+app.use(volleyball);
 
 //middleware
 app.use(bodyParser.json());
