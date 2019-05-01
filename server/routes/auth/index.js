@@ -6,17 +6,9 @@ const schema = Joi.object().keys({
   password: Joi.string().min(6).required()
 });
 
-const db = require('../../config/db'); //подключение не работает
-const users = db.get('users');
-users.createIndex('username', { unique: true });
+const users = require('../../models/user.model');
 
 const router = express.Router();
-
-router.get('/', async (req, res) => {
-  res.json({
-    message: "cool"
-  });
-});
 
 router.post('/signup', (req, res, next) => {
   const result = Joi.validate(req.body, schema);
@@ -24,8 +16,8 @@ router.post('/signup', (req, res, next) => {
     users.findOne({
       username: req.body.username
     }).then(user => {
-      res.json({ user });
-    });
+      res.json(user);
+    })
   } else {
     next(result.error);
   }
