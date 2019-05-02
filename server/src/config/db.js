@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose'
 
 let user = 'niki';
 let pass = 'jkA-XK2-g9u-9nx';

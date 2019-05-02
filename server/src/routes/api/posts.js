@@ -1,26 +1,26 @@
-const express = require('express');
-const PostModel = require('../../models/post.model');
+import express from 'express'
+import Post from '../../models/post.model'
 
 const router = express.Router();
 
 router.route('/')
     .get(async (req, res) => {
-      res.json(await PostModel.find({}));
+      res.json(await Post.find({}));
     })
     .post(async  (req, res) => {
-      let model = new PostModel({
+      let post = new Post({
         text: req.body.text
       });
-      await model.save();
+      await post.save();
       res.status(201).send();
     });
 
 router.route('/:id')
     .get(async (req, res) => {
-      res.json(await PostModel.findById(req.params.id));
+      res.json(await Post.findById(req.params.id));
     })
     .delete(async (req, res) => {
-      await PostModel.deleteOne({_id: req.params.id});
+      await Post.deleteOne({_id: req.params.id});
       res.status(200).send();
     });
 
