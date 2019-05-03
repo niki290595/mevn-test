@@ -8,46 +8,47 @@ import Dashboard from './components/views/Dashboard.vue';
 Vue.use(Router);
 
 function loggedInRedirectDashboard(to, from, next) {
-    if (localStorage.token) {
-        next('/dashboard');
-    } else {
-        next();
-    }
+  if (localStorage.token) {
+    next('/dashboard');
+  } else {
+    next();
+  }
 }
 
 function isLoggedIn(to, from, next) {
-    if (localStorage.token) {
-        next();
-    } else {
-        next('/login');
-    }
+  if (localStorage.token) {
+    next();
+  } else {
+    next('/login');
+  }
 }
 
 
 export default new Router({
-    routes: [
-        {
-            path: '/',
-            name: 'home',
-            component: Home,
-        },
-        {
-            path: '/signup',
-            name: 'signup',
-            component: Signup,
-            beforeEnter: loggedInRedirectDashboard,
-        },
-        {
-            path: '/login',
-            name: 'login',
-            component: Login,
-            beforeEnter: loggedInRedirectDashboard,
-        },
-        {
-            path: '/dashboard',
-            name: 'dashboard',
-            component: Dashboard,
-            beforeEnter: isLoggedIn,
-        },
-    ],
+  routes: [{
+    path: '/',
+    name: 'home',
+    component: Home
+  }, {
+    path: '/signup',
+    name: 'signup',
+    component: Signup,
+    meta: {
+      layout: 'auth-layout'
+    },
+    beforeEnter: loggedInRedirectDashboard,
+  }, {
+    path: '/login',
+    name: 'login',
+    component: Login,
+    meta: {
+      layout: 'auth-layout'
+    },
+    beforeEnter: loggedInRedirectDashboard,
+  }, {
+    path: '/dashboard',
+    name: 'dashboard',
+    component: Dashboard,
+    beforeEnter: isLoggedIn,
+  }]
 });
