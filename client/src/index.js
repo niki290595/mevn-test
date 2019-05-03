@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuetify from 'vuetify'
+import VeeValidate from 'vee-validate'
 import colors from 'vuetify/es5/util/colors'
 import App from './App.vue'
 import store from './store/index'
@@ -22,7 +23,27 @@ Vue.use(Vuetify, {
     primary: colors.red.darken4,
     secondary: colors.grey.darken1,
     accent: colors.shades.black,
-    error: colors.red.accent3
+    error: colors.deepPurple.darken4
+  }
+});
+Vue.use(VeeValidate, {
+  locale: 'ru',
+  dictionary: {
+    ru: {
+      custom: {
+        email: {
+          required: 'Введите E-mail',
+          email: 'Введите корректный E-mail'
+        },
+        password: {
+          required: 'Введите пароль',
+        },
+        passconf: {
+          required: 'Повторите пароль',
+          confirmed: 'Пароли не совпадают',
+        },
+      },
+    }
   }
 });
 

@@ -41,6 +41,7 @@
   },
   "dependencies": {
     "net": "^1.0.2",
+    "vee-validate": "^2.2.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
     "vuetify": "^1.5.14",
