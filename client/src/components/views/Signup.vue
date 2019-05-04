@@ -59,6 +59,9 @@
 </template>
 
 <script>
+  import {RepositoryFactory} from "../../repositories/RepositoryFactory";
+  const UserRepository = RepositoryFactory.get('users');
+
   export default {
     data: () => ({
       form: {
@@ -70,6 +73,12 @@
     methods: {
       signup() {
         console.log("send");
+        UserRepository.createUser({
+          email: this.form.email,
+          password: this.form.password
+        }).then((v) => {
+          console.log(v);
+        })
       }
     },
     computed: {

@@ -40,7 +40,7 @@
     "webpack-merge": "^4.2.1"
   },
   "dependencies": {
-    "net": "^1.0.2",
+    "axios": "^0.18.0",
     "vee-validate": "^2.2.5",
     "vue": "^2.6.10",
     "vue-router": "^3.0.6",
