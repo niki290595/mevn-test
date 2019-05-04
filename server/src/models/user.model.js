@@ -7,13 +7,7 @@ const UserSchema = new db.Schema({
     type: db.SchemaTypes.Email,
     require: true,
     unique: true,
-    lowercase: true,
-    // trim: true,
-    // minlength: [3, "Слишком короткий логин"],
-    // maxlength: [30, "Слишком длинный логин"],
-    // match: [/(^[a-zA-Z0-9_]+$)/,
-    //   "Логин может содержать только латинские символы, цифры и символ подчеркивания"
-    // ]
+    lowercase: true
   },
   password: {
     type: String,
@@ -31,8 +25,8 @@ UserSchema.pre('save', async function(next) {
   next();
 });
 
-UserSchema.methods.comparePassword = async (candidatePassword) => {
-  return await bcrypt.compare(candidatePassword, this.password)
+UserSchema.methods.comparePassword = async function(candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
 };
 
 module.exports = db.model('User', UserSchema);
