@@ -32,7 +32,7 @@ router.post('/login', async (req, res, next) => {
 
     const token = await getToken(user);
 
-    res.json(token);
+    res.json({ token });
   } catch (e) {
     res.status(422);
     next(e);
