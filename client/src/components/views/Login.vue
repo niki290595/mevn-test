@@ -1,112 +1,96 @@
 <template>
-    <section>
-        <h1>Login</h1>
-        <div v-if="loggingIn">
-            <img src="/assets/img/pacman_loading.svg" />
-            Вы вошли
-        </div>
-        <div v-if="errorMessage" class="alert alert-danger" role="alert">
-            {{errorMessage}}
-        </div>
-        <form v-if="!loggingIn" @submit.prevent="login()">
-            <div class="form-group">
-                <label for="username">Username</label>
-                <input
-                        v-model="user.username"
-                        type="text"
-                        class="form-control"
-                        id="username"
-                        aria-describedby="usernameHelp"
-                        placeholder="Enter a username" required>
-                <h5 id="usernameHelp" class="form-text text-muted">
-                    Enter your username to login.
-                </h5>
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                        v-model="user.password"
-                        type="password"
-                        class="form-control"
-                        id="password"
-                        aria-describedby="passwordHelp"
-                        placeholder="Enter a password" required>
-                <h5 id="passwordHelp" class="form-text text-muted">
-                    Enter your password to login.
-                </h5>
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-        </form>
-    </section>
+    <v-form class="ma-3"
+            ref="form"
+            @submit.prevent="(valid && signin())">
+        <v-container>
+            <v-layout column>
+                <v-flex>
+                    <h5 class="headline">Авторизация</h5>
+                </v-flex>
+
+                <v-flex v-if="errorMessage">
+                    <span class="subheading error--text">{{ errorMessage }}</span>
+                </v-flex>
+
+                <v-flex>
+                    <v-text-field name="email"
+                                  required
+                                  label="E-mail"
+                                  v-model="user.email"
+                                  v-validate="'required|email'"
+                                  :error-messages="errors.collect('email')"
+                                  prepend-icon="mail_outline">
+                    </v-text-field>
+                </v-flex>
+
+                <v-flex>
+                    <v-text-field name="password"
+                                  label="Пароль"
+                                  v-model="user.password"
+                                  v-validate="'required|min:6'"
+                                  :error-messages="errors.collect('password')"
+                                  ref="password"
+                                  type="password"
+                                  prepend-icon="lock_outline">
+                    </v-text-field>
+                </v-flex>
+
+                <v-flex>
+                    <v-btn class="primary-gradient"
+                           type="submit"
+                           :loading="loading"
+                           :disabled="loading"
+                           round block>
+                        Войти
+                    </v-btn>
+                </v-flex>
+
+                <v-flex class="body-1">
+                    <a>Уже есть аккаунт? Войти</a>
+                </v-flex>
+            </v-layout>
+        </v-container>
+    </v-form>
 </template>
 
 <script>
-    import Joi from 'joi';
-    const LOGIN_URL = 'http://localhost:5000/auth/login';
-    const schema = Joi.object().keys({
-        username: Joi.string().regex(/(^[a-zA-Z0-9_]+$)/).min(2).max(30)
-            .required(),
-        password: Joi.string().trim().min(10).required(),
-    });
-    export default {
-        data: () => ({
-            errorMessage: '',
-            loggingIn: false,
-            user: {
-                username: '',
-                password: '',
-            },
-        }),
-        methods: {
-            login() {
-                this.errorMessage = '';
-                if (this.validUser()) {
-                    this.loggingIn = true;
-                    const body = {
-                        username: this.user.username,
-                        password: this.user.password,
-                    };
-                    fetch(LOGIN_URL, {
-                        method: 'POST',
-                        headers: {
-                            'content-type': 'application/json',
-                        },
-                        body: JSON.stringify(body),
-                    }).then((response) => {
-                        if (response.ok) {
-                            return response.json();
-                        }
-                        return response.json().then((error) => {
-                            throw new Error(error.message);
-                        });
-                    }).then((result) => {
-                        localStorage.token = result.token;
-                        setTimeout(() => {
-                            this.loggingIn = false;
-                            this.$router.push('/dashboard');
-                        }, 1000);
-                    }).catch((error) => {
-                        setTimeout(() => {
-                            this.loggingIn = false;
-                            this.errorMessage = error.message;
-                        }, 1000);
-                    });
-                }
-            },
-            validUser() {
-                const result = Joi.validate(this.user, schema);
-                if (result.error === null) {
-                    return true;
-                }
-                if (result.error.message.includes('username')) {
-                    this.errorMessage = 'Username is invalid. 😭';
-                } else {
-                    this.errorMessage = 'Password is invalid. 🙈';
-                }
-                return false;
-            },
-        },
-    };
+  import {RepositoryFactory} from "../../repositories/RepositoryFactory";
+
+  const UserRepository = RepositoryFactory.get('users');
+
+  export default {
+    data: () => ({
+      user: {
+        email: null,
+        password: null
+      },
+      errorMessage: null,
+      loading: false
+    }),
+    methods: {
+      signin() {
+        UserRepository.createUser(this.user)
+          .then(
+            (response) => { console.log(response) },
+            (error) => { this.showError(error.response.data.message) }
+          );
+      },
+
+      showError(msg) {
+        if (msg.startsWith('E11000')) {
+          this.errorMessage = `E-mail ${this.user.email} уже используется`
+        } else
+          this.errorMessage = msg;
+      }
+    },
+    computed: {
+      valid() {
+        return Object.keys(this.fields).every(field => {
+          return this.fields[field] && this.fields[field].valid;
+        });
+      }
+    }
+  }
 </script>
 
 <style>
