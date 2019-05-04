@@ -1,18 +1,19 @@
 import db from '../config/db'
-import bcrypt from "bcryptjs"
+import bcrypt from 'bcryptjs'
+import 'mongoose-type-email'
 
 const UserSchema = new db.Schema({
-  username: {
-    type: String,
+  email: {
+    type: db.SchemaTypes.Email,
     require: true,
     unique: true,
     lowercase: true,
-    trim: true,
-    minlength: [3, "Слишком короткий логин"],
-    maxlength: [30, "Слишком длинный логин"],
-    match: [/(^[a-zA-Z0-9_]+$)/,
-      "Логин может содержать только латинские символы, цифры и символ подчеркивания"
-    ]
+    // trim: true,
+    // minlength: [3, "Слишком короткий логин"],
+    // maxlength: [30, "Слишком длинный логин"],
+    // match: [/(^[a-zA-Z0-9_]+$)/,
+    //   "Логин может содержать только латинские символы, цифры и символ подчеркивания"
+    // ]
   },
   password: {
     type: String,
