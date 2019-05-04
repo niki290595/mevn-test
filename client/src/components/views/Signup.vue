@@ -8,11 +8,15 @@
                     <h5 class="headline">Регистрация</h5>
                 </v-flex>
 
+                <v-flex v-if="errorMessage">
+                    <span class="subheading error--text">{{ errorMessage }}</span>
+                </v-flex>
+
                 <v-flex>
                     <v-text-field name="email"
                                   required
                                   label="E-mail"
-                                  v-model="form.email"
+                                  v-model="user.email"
                                   v-validate="'required|email'"
                                   :error-messages="errors.collect('email')"
                                   prepend-icon="mail_outline">
@@ -22,8 +26,8 @@
                 <v-flex>
                     <v-text-field name="password"
                                   label="Пароль"
-                                  v-model="form.password"
-                                  v-validate="'required'"
+                                  v-model="user.password"
+                                  v-validate="'required|min:6'"
                                   :error-messages="errors.collect('password')"
                                   ref="password"
                                   type="password"
@@ -34,7 +38,6 @@
                 <v-flex>
                     <v-text-field name="passconf"
                                   label="Повторите пароль"
-                                  v-model="form.passconf"
                                   v-validate="'required|confirmed:password'"
                                   :error-messages="errors.collect('passconf')"
                                   type="password"
@@ -45,7 +48,9 @@
                 <v-flex>
                     <v-btn class="primary-gradient"
                            type="submit"
-                           color round block>
+                           :loading="loading"
+                           :disabled="loading"
+                           round block>
                         Регистрация
                     </v-btn>
                 </v-flex>
@@ -60,25 +65,35 @@
 
 <script>
   import {RepositoryFactory} from "../../repositories/RepositoryFactory";
+
   const UserRepository = RepositoryFactory.get('users');
 
   export default {
     data: () => ({
-      form: {
+      user: {
         email: null,
-        password: null,
-        passconf: null
+        password: null
       },
+      errorMessage: null,
+      loading: false
     }),
     methods: {
       signup() {
-        console.log("send");
-        UserRepository.createUser({
-          email: this.form.email,
-          password: this.form.password
-        }).then((v) => {
-          console.log(v);
-        })
+        this.loading = true;
+        this.errorMessage = null;
+        UserRepository.createUser(this.user)
+          .then(
+            () => { this.$router.push('/login') },
+            (error) => { this.showError(error.response.data.message) }
+          );
+      },
+
+      showError(msg) {
+        if (msg.startsWith('E11000')) {
+          this.errorMessage = `E-mail ${this.user.email} уже используется`
+        } else
+          this.errorMessage = msg;
+        this.loading = false;
       }
     },
     computed: {

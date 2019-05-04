@@ -22,4 +22,7 @@ $border-lightex          : #F2F6FC;
 .primary-gradient {
   background: linear-gradient(45deg, #640408, $primary-color, #640408);
   color: white!important;
+  .v-progress-circular {
+    color: white;
+  }
 }

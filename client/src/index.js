@@ -37,6 +37,7 @@ Vue.use(VeeValidate, {
         },
         password: {
           required: 'Введите пароль',
+          min: 'Пароль должен содержать не менее 6 символов'
         },
         passconf: {
           required: 'Повторите пароль',
