@@ -5,5 +5,8 @@ const baseDomain = "http://localhost:5000";
 const baseURL = `${baseDomain}`;
 
 export default axios.create({
-  baseURL
+  baseURL,
+  headers: {
+    Authorization: `Bearer `/* TODO: add token*/
+  }
 });
