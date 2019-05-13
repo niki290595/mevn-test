@@ -9,12 +9,13 @@ router.post('/signup', async (req, res, next) => {
     if (isInvalidData(req.body))
       throw new Error('Invalid data');
 
-    await new User({
+    const user = await new User({
       email: req.body.email,
       password: req.body.password
     }).save();
 
-    res.status(201).send();
+    const token = await getToken(user);
+    res.json({ token, user });
   } catch (e) {
     res.status(422);
     next(e);
@@ -31,8 +32,7 @@ router.post('/login', async (req, res, next) => {
       throw new Error('User not found');
 
     const token = await getToken(user);
-
-    res.json({ token });
+    res.json({ token, user });
   } catch (e) {
     res.status(422);
     next(e);

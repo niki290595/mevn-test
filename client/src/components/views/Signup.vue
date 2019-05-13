@@ -1,7 +1,7 @@
 <template>
     <v-form class="ma-3"
             ref="form"
-            @submit.prevent="(valid && signup())">
+            @submit.prevent="(valid && signUp())">
         <v-container>
             <v-layout column>
                 <v-flex>
@@ -56,7 +56,7 @@
                 </v-flex>
 
                 <v-flex class="body-1">
-                    <a>Уже есть аккаунт? Войти</a>
+                    <router-link to="/login">Уже есть аккаунт? Войти</router-link>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -66,7 +66,7 @@
 <script>
   import {RepositoryFactory} from "../../repositories/RepositoryFactory";
 
-  const UserRepository = RepositoryFactory.get('users');
+  const AuthRepository = RepositoryFactory.get('auth');
 
   export default {
     data: () => ({
@@ -78,12 +78,16 @@
       loading: false
     }),
     methods: {
-      signup() {
+      signUp() {
         this.loading = true;
         this.errorMessage = null;
-        UserRepository.createUser(this.user)
+        AuthRepository.signUp(this.user)
           .then(
-            () => { this.$router.push('/login') },
+            (response) => {
+              this.$store.commit('auth_success',
+                response.data.token, response.data.user);
+              this.$router.push('/dashboard')
+            },
             (error) => { this.showError(error.response.data.message) }
           );
       },

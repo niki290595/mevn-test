@@ -1,7 +1,7 @@
 <template>
     <v-form class="ma-3"
             ref="form"
-            @submit.prevent="(valid && signin())">
+            @submit.prevent="(valid && login())">
         <v-container>
             <v-layout column>
                 <v-flex>
@@ -46,7 +46,7 @@
                 </v-flex>
 
                 <v-flex class="body-1">
-                    <a>Уже есть аккаунт? Войти</a>
+                    <router-link to="/signup">Регистрация</router-link>
                 </v-flex>
             </v-layout>
         </v-container>
@@ -56,7 +56,7 @@
 <script>
   import {RepositoryFactory} from "../../repositories/RepositoryFactory";
 
-  const UserRepository = RepositoryFactory.get('users');
+  const AuthRepository = RepositoryFactory.get('auth');
 
   export default {
     data: () => ({
@@ -68,19 +68,26 @@
       loading: false
     }),
     methods: {
-      signin() {
-        UserRepository.createUser(this.user)
+      login() {
+        this.loading = true;
+        this.errorMessage = null;
+        AuthRepository.login(this.user)
           .then(
-            (response) => { console.log(response) },
+            (response) => {
+              this.$store.commit('auth_success',
+                response.data.token, response.data.user);
+              this.$router.push('/dashboard')
+            },
             (error) => { this.showError(error.response.data.message) }
           );
       },
 
       showError(msg) {
-        if (msg.startsWith('E11000')) {
-          this.errorMessage = `E-mail ${this.user.email} уже используется`
+        if (msg.startsWith('User')) {
+          this.errorMessage = 'Неверный логин или пароль'
         } else
           this.errorMessage = msg;
+        this.loading = false;
       }
     },
     computed: {
