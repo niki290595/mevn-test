@@ -4,7 +4,7 @@
   "description": "",
   "main": "src/server.js",
   "scripts": {
-    "dev": "nodemon --exec babel-node src/server.js",
+    "server-dev": "nodemon --exec babel-node src/server.js",
     "build": "babel src --out-dir dist",
     "serve": "node dist/server.js"
   },
