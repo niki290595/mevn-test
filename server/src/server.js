@@ -1,14 +1,11 @@
 import '@babel/polyfill'
 import express from 'express'
-import volleyball from 'volleyball'
-import cors from 'cors'
 import routing from './routes/index'
+import middlewares from './middlewares'
 
 const app = express();
-//middleware
-app.use(volleyball);
-app.use(express.json());
-app.use(cors());
+
+middlewares(app);
 routing(app);
 
 //todo: app.use(express.static(path.join(__dirname, 'public')));
