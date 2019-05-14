@@ -15,7 +15,6 @@ module.exports = (app) => {
     try {
       const authHeader = req.get('authorization');
       const token = authHeader.split(' ')[1];
-      console.log(token);
       req.user = await verifyToken(token);
     } catch (e) {}
 

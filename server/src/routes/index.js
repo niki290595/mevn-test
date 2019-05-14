@@ -1,6 +1,9 @@
 module.exports = (app) => {
   app.get('/', (req, res) => {
-    res.json({ message: 'API works!!!' });
+    res.json({
+      message: 'API works!!!',
+      user: req.user
+    });
   });
 
   app.use('/auth', require('./auth/index'));
