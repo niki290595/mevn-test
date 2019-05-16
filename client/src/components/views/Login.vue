@@ -45,8 +45,11 @@
                     </v-btn>
                 </v-flex>
 
-                <v-flex class="body-1">
-                    <router-link to="/signup">Регистрация</router-link>
+                <v-flex>
+                    <v-layout body-1 row justify-space-between>
+                        <router-link to="/signup">Регистрация</router-link>
+                        <router-link to="/">На главную</router-link>
+                    </v-layout>
                 </v-flex>
             </v-layout>
         </v-container>

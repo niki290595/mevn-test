@@ -11,11 +11,12 @@
                        @click="logout()">
                     Выйти
                 </v-btn>
+                <v-btn v-else flat to="/login">Войти</v-btn>
             </v-toolbar-items>
         </v-toolbar>
 
         <v-content>
-            <v-container class="pa-0" fluid>
+            <v-container pa-0 fluid>
                 <v-layout row wrap align-center>
                     <v-flex>
                         <slot/>

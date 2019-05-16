@@ -20,6 +20,7 @@
     .form {
         width: 100%;
         max-width: 420px;
+        min-width: 300px;
         margin: auto;
         background: rgba(255, 255, 255, .8);
         border-radius: 6px;

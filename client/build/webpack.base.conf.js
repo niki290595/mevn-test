@@ -19,9 +19,9 @@ module.exports = {
         app: PATHS.src
     },
     output: {
-        filename: `${PATHS.assets}/js/[name].js`,
+        filename: `${PATHS.assets}js/[name].js`,
         path: PATHS.dist,
-        publicPath: '/'
+        publicPath: ''
     },
     module: {
         rules: [{
@@ -81,7 +81,7 @@ module.exports = {
     plugins: [
         new VueLoaderPlugin(),
         new MiniCssExtractPlugin({
-            filename: `${PATHS.assets}/css/[name].css`,
+            filename: `${PATHS.assets}css/[name].css`,
         }),
         new HtmlWebpackPlugin({
             hash: false,
@@ -89,7 +89,7 @@ module.exports = {
             filename: './index.html'
         }),
         new CopyWebpackPlugin([
-            { from: `${PATHS.src}/img`, to: `${PATHS.assets}/img` },
+            { from: `${PATHS.src}/img`, to: `${PATHS.assets}img` },
             { from: `${PATHS.src}/static`, to: '' }
         ])
     ]
