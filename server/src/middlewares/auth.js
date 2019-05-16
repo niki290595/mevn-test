@@ -5,7 +5,7 @@ async function processToken(req, res, next) {
     const authHeader = req.get('authorization');
     const token = authHeader.split(' ')[1];
     req.user = await verifyToken(token);
-  } catch (e) {}
+  } catch (ignore) {}
 
   next();
 }

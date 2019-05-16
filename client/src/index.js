@@ -48,12 +48,6 @@ Vue.use(VeeValidate, {
   }
 });
 
-// const app = new Vue({
-//   store,
-//   router,
-//   el: '#app'
-// });
-
 new Vue({
   router,
   store,

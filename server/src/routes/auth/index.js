@@ -37,7 +37,6 @@ router.post('/login', async (req, res, next) => {
     res.status(422);
     next(e);
   }
-
 });
 
 function isInvalidData(data) {

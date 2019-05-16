@@ -74,8 +74,7 @@
         AuthRepository.login(this.user)
           .then(
             (response) => {
-              this.$store.commit('auth_success',
-                response.data.token, response.data.user);
+              this.$store.commit('login', response.data.token);
               this.$router.push('/dashboard')
             },
             (error) => { this.showError(error.response.data.message) }
