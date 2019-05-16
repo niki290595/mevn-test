@@ -1,7 +1,7 @@
 import '@babel/polyfill'
 import express from 'express'
 import routing from './routes/index'
-import middlewares from './middlewares'
+import middlewares from './middlewares/index'
 
 const app = express();
 
