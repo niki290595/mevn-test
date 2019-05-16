@@ -1,5 +1,6 @@
 @import "utils/libs";
 @import "utils/vars";
+@import "utils/colors";
 @import "utils/mixins";
 @import "utils/fonts";
 
@@ -65,28 +66,28 @@ section, .section {
   min-height: 100vh;
   margin: 0 auto;
 }
+//
+//.content-wrapper {
+//  display: flex;
+//  flex-direction: column;
+//  min-height: 100vh;
+//}
 
-.content-wrapper {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-}
-
-.container {
-  width: 100%;
-  flex: 0 0 auto;
-  position: relative;
-  max-width: $desktopWidth;
-  margin: 0 auto;
-  @media screen and (max-width: $smDesktopWidth) {
-    max-width: $tableWidth;
-  }
-  @media screen and (max-width: $tableWidth) {
-    max-width: $phoneWidth;
-  }
-  @media screen and (max-width: $phoneWidth) {
-    max-width: $smPhoneWidth;
-  }
-}
+//.container {
+//  width: 100%;
+//  flex: 0 0 auto;
+//  position: relative;
+//  max-width: $desktopWidth;
+//  margin: 0 auto;
+//  @media screen and (max-width: $smDesktopWidth) {
+//    max-width: $tableWidth;
+//  }
+//  @media screen and (max-width: $tableWidth) {
+//    max-width: $phoneWidth;
+//  }
+//  @media screen and (max-width: $phoneWidth) {
+//    max-width: $smPhoneWidth;
+//  }
+//}
 
 @import "modules/wrapper.scss";
